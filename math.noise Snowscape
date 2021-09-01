@@ -1,0 +1,61 @@
+local X = 50
+local Z = 50
+
+local grid = {}
+--[[
+local water = Instance.new("Part")
+water.Anchored = true
+water.Size = Vector3.new(X*5, 30, Z*5)
+water.Position = Vector3.new(((X+1)*5)/2, -5, ((Z+1)*5)/2)
+water.CanCollide = false
+water.Transparency = .5
+water.BrickColor = BrickColor.new("Electric blue")
+water.Parent = workspace
+]]--
+
+for x = 1, X do
+	grid[x] = {}
+
+	for z = 1, Z do
+		grid[x][z] = math.noise(x/5, z/5) * 7 * 2
+	end
+end
+
+for x = 1, X do
+	for z = 1, Z do
+		wait(0.2)
+		local yPos = grid[x][z]
+
+		local part = Instance.new("Part")
+		part.Anchored = true
+		
+		if yPos + 9 > 9 then
+			part.BrickColor = BrickColor.new("White")
+			part.Material = Enum.Material.Sand
+		elseif yPos + 6 > 4 then
+			part.BrickColor = BrickColor.new("Dark stone grey")
+			part.Material = Enum.Material.Slate
+		elseif yPos + 16 > 3 then
+			part.BrickColor = BrickColor.new("Medium green")
+			part.Material = Enum.Material.Grass
+		end
+
+		part.Position = Vector3.new(x*3, yPos, z*3)
+		part.Size = Vector3.new(3, 20, 3)
+		part.Parent = script
+	end
+end
+
+--[[
+    Script #2 of 2: game.ServerScriptService.RandomVsNoise (Server Script)
+]]
+
+print("10 RANDOM NUMBERS:")
+for i = 1, 10 do
+	print(math.random())
+end
+
+print("10 NUMBERS GENERATED FROM NOISE")
+for i = 1, 10 do
+	print(math.noise(i/10))
+end
